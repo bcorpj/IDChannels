@@ -9,7 +9,10 @@ use Illuminate\View\Component;
 class Input extends Component
 {
     public function __construct(
-        public ?string $label = null
+        public string $name,
+        public string|null $label = null,
+        public string|null $class = null,
+        public bool $showError = false
     ) {}
 
     public function render(): View|Closure|string

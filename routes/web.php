@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/login', Login::class)->middleware('guest');
+Route::get('/login', Login::class)->middleware('guest')->name('login');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', Index::class);
