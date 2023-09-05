@@ -18,6 +18,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\EditAction;
@@ -47,7 +48,7 @@ class Table extends Component implements HasTable, HasForms
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(),
-                TextColumn::make('channelType.name')
+                TextColumn::make('channelType.id')
                     ->label('Тип канала')
                     ->searchable()
                     ->sortable()
@@ -146,214 +147,49 @@ class Table extends Component implements HasTable, HasForms
             ])
             ->deferLoading()
             ->headerActions([
-                CreateAction::make()
-                    ->form([
-                        Section::make('ID-канала')
-                            ->schema([
-                                TextInput::make('channel_number')
-                                    ->required()
-                                    ->maxLength(255),
-                                TextInput::make('klm')
-                                    ->maxLength(255),
-                                Select::make('channel_type_id')
-                                    ->label('Тип канала')
-                                    ->relationship(name: 'channelType', titleAttribute: 'name')
-                                    ->options(ChannelType::query()->pluck('name', 'id'))
-                                    ->searchable()
-                                    ->createOptionForm([
-                                        TextInput::make('name')
-                                            ->required()
-                                            ->maxLength(255)
-                                    ])
-                                    ->editOptionForm([
-                                        TextInput::make('name')
-                                            ->required()
-                                    ]),
-                                Select::make('traffic_type_id')
-                                    ->label('Тип трафика')
-                                    ->relationship(name: 'trafficType', titleAttribute: 'name')
-                                    ->options(TrafficType::query()->pluck('name', 'id'))
-                                    ->searchable()
-                                    ->createOptionForm([
-                                        TextInput::make('name')
-                                            ->required()
-                                            ->maxLength(255)
-                                    ])
-                                    ->editOptionForm([
-                                        TextInput::make('name')
-                                            ->required()
-                                    ]),
-                                Select::make('transmission_type_id')
-                                    ->label('Тип среды передач')
-                                    ->relationship(name: 'transmissionType', titleAttribute: 'name')
-                                    ->options(TransmissionType::query()->pluck('name', 'id'))
-                                    ->searchable()
-                                    ->createOptionForm([
-                                        TextInput::make('name')
-                                            ->required()
-                                            ->maxLength(255)
-                                    ])
-                                    ->editOptionForm([
-                                        TextInput::make('name')
-                                            ->required()
-                                    ]),
-                                Select::make('direction_level_id')
-                                    ->label('Уровень/направление')
-                                    ->relationship(name: 'directionLevel', titleAttribute: 'name')
-                                    ->options(DirectionLevel::query()->pluck('name', 'id'))
-                                    ->searchable()
-                                    ->createOptionForm([
-                                        TextInput::make('name')
-                                            ->required()
-                                            ->maxLength(255)
-                                    ])
-                                    ->editOptionForm([
-                                        TextInput::make('name')
-                                            ->required()
-                                    ]),
-                                TextInput::make('bandwidth')
-                                    ->maxLength(255),
-                                Select::make('type_id')
-                                    ->label('Вид')
-                                    ->relationship(name: 'type', titleAttribute: 'name')
-                                    ->options(Type::query()->pluck('name', 'id'))
-                                    ->searchable()
-                                    ->createOptionForm([
-                                        TextInput::make('name')
-                                            ->required()
-                                            ->maxLength(255),
-                                        TextInput::make('alias')
-                                            ->required()
-                                            ->maxLength(255),
-                                    ])
-                                    ->editOptionForm([
-                                        TextInput::make('name')
-                                            ->required(),
-                                        TextInput::make('alias')
-                                            ->required()
-                                    ]),
-                            ])
-                            ->columns()
-                            ->collapsed(false),
-                        Section::make('DE-канала')
-                            ->relationship('deChannel')
-                            ->columns()
-                            ->schema([
-                                TextInput::make('client_provider_name')
-                                    ->maxLength(255),
-                                TextInput::make('start_connection_point')
-                                    ->label('ТП №1')
-                                    ->maxLength(255),
-                                TextInput::make('end_connection_point')
-                                    ->label('ТП №2')
-                                    ->maxLength(255),
-                                TextInput::make('intermediate_connection')
-                                    ->label('Промежуточное подключение')
-                                    ->maxLength(255),
-                                TextInput::make('using_device')
-                                    ->label('Используемый вид оборудования')
-                                    ->maxLength(255),
-                                DatePicker::make('connection_date')
-                                    ->label('Дата подключения')
-                                    ->native(false),
-                                TextInput::make('length')
-                                    ->label('Протяженность')
-                                    ->maxLength(255),
-                                TextInput::make('testing')
-                                    ->label('Тестирование')
-                                    ->maxLength(255),
-                                TextInput::make('connection_line')
-                                    ->label('Соединительная линия')
-                                    ->maxLength(255),
-                                Textarea::make('reason')
-                                    ->autosize()
-                                    ->label('Основание')
-                                    ->maxLength(1024),
-                            ])
-                            ->collapsed(false),
-                        Section::make('Дополнительная информация')
-                            ->relationship('information')
-                            ->schema([
-                                Repeater::make('repeater')
-                                    ->schema([
-                                        TextInput::make('key')
-                                            ->label('Ключ'),
-                                        TextInput::make('value')
-                                            ->label('Значение')
-                                    ])
-                                    ->label('Пользовательские данные')
-                                    ->columns()
-                                    ->collapsed()
-                                    ->cloneable()
-                                    ->itemLabel(fn (array $state): ?string => $state['key'] ?? null),
-                                MarkdownEditor::make('markdown')
-                                    ->fileAttachmentsDirectory('markdown-attachments'),
-                            ])
-                            ->columns()
-                            ->collapsed(false)
-
-                    ])
-                    ->modalWidth('7xl')
+                $this->createNewChannel()
             ])
             ->striped()
             ->paginated([10, 20, 50]);
     }
 
-    public function openIdChannel()
+    /*
+     *
+     * Open view menu of ID channel
+     */
+    public function openIdChannel() : Action
     {
         return ViewAction::make()
             ->form([
                 Section::make('ID-канала')
                     ->schema([
                         TextInput::make('channel_number')
+                            ->required()
                             ->maxLength(255),
                         TextInput::make('klm')
                             ->maxLength(255),
-                        TextInput::make('channelType.name')
-                            ->maxLength(255)
-                            ->label('Тип канала'),
-                        TextInput::make('trafficType.name')
-                            ->maxLength(255)
-                            ->label('Тип трафика'),
-                        TextInput::make('transmissionType.name')
-                            ->maxLength(255)
-                            ->label('Тип среды передач'),
+                        Select::make('channel_type_id')
+                            ->label('Тип канала')
+                            ->relationship(name: 'channelType', titleAttribute: 'name')
+                            ->options(ChannelType::query()->pluck('name', 'id')),
+                        Select::make('traffic_type_id')
+                            ->label('Тип трафика')
+                            ->relationship(name: 'trafficType', titleAttribute: 'name')
+                            ->options(TrafficType::query()->pluck('name', 'id')),
+                        Select::make('transmission_type_id')
+                            ->label('Тип среды передач')
+                            ->relationship(name: 'transmissionType', titleAttribute: 'name')
+                            ->options(TransmissionType::query()->pluck('name', 'id')),
                         Select::make('direction_level_id')
                             ->label('Уровень/направление')
                             ->relationship(name: 'directionLevel', titleAttribute: 'name')
-                            ->options(DirectionLevel::query()->pluck('name', 'id'))
-                            ->searchable()
-                            ->createOptionForm([
-                                TextInput::make('name')
-                                    ->required()
-                                    ->maxLength(255)
-                            ])
-                            ->editOptionForm([
-                                TextInput::make('name')
-                                    ->required()
-                            ]),
+                            ->options(DirectionLevel::query()->pluck('name', 'id')),
                         TextInput::make('bandwidth')
-                            ->required()
                             ->maxLength(255),
                         Select::make('type_id')
                             ->label('Вид')
                             ->relationship(name: 'type', titleAttribute: 'name')
-                            ->options(Type::query()->pluck('name', 'id'))
-                            ->searchable()
-                            ->createOptionForm([
-                                TextInput::make('name')
-                                    ->required()
-                                    ->maxLength(255),
-                                TextInput::make('alias')
-                                    ->required()
-                                    ->maxLength(255),
-                            ])
-                            ->editOptionForm([
-                                TextInput::make('name')
-                                    ->required(),
-                                TextInput::make('alias')
-                                    ->required()
-                            ]),
+                            ->options(Type::query()->pluck('name', 'id')),
                     ])
                     ->columns(),
                 Section::make('DE-канала')
@@ -412,7 +248,11 @@ class Table extends Component implements HasTable, HasForms
             ->modalWidth('7xl');
     }
 
-    public function editMainTable()
+    /*
+     *
+     * Open edit menu of ID channel
+     */
+    public function editMainTable() : Action
     {
         return EditAction::make()
             ->form([
@@ -563,9 +403,161 @@ class Table extends Component implements HasTable, HasForms
             ])
             ->modalWidth('7xl');
     }
+
+
+    public function createNewChannel() : Action
+    {
+        return CreateAction::make()
+            ->form([
+                Section::make('ID-канала')
+                    ->schema([
+                        TextInput::make('channel_number')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('klm')
+                            ->maxLength(255),
+                        Select::make('channel_type_id')
+                            ->label('Тип канала')
+                            ->relationship(name: 'channelType', titleAttribute: 'name')
+                            ->options(ChannelType::query()->pluck('name', 'id'))
+                            ->searchable()
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255)
+                            ])
+                            ->editOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                            ]),
+                        Select::make('traffic_type_id')
+                            ->label('Тип трафика')
+                            ->relationship(name: 'trafficType', titleAttribute: 'name')
+                            ->options(TrafficType::query()->pluck('name', 'id'))
+                            ->searchable()
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255)
+                            ])
+                            ->editOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                            ]),
+                        Select::make('transmission_type_id')
+                            ->label('Тип среды передач')
+                            ->relationship(name: 'transmissionType', titleAttribute: 'name')
+                            ->options(TransmissionType::query()->pluck('name', 'id'))
+                            ->searchable()
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255)
+                            ])
+                            ->editOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                            ]),
+                        Select::make('direction_level_id')
+                            ->label('Уровень/направление')
+                            ->relationship(name: 'directionLevel', titleAttribute: 'name')
+                            ->options(DirectionLevel::query()->pluck('name', 'id'))
+                            ->searchable()
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255)
+                            ])
+                            ->editOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                            ]),
+                        TextInput::make('bandwidth')
+                            ->maxLength(255),
+                        Select::make('type_id')
+                            ->label('Вид')
+                            ->relationship(name: 'type', titleAttribute: 'name')
+                            ->options(Type::query()->pluck('name', 'id'))
+                            ->searchable()
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('alias')
+                                    ->required()
+                                    ->maxLength(255),
+                            ])
+                            ->editOptionForm([
+                                TextInput::make('name')
+                                    ->required(),
+                                TextInput::make('alias')
+                                    ->required()
+                            ]),
+                    ])
+                    ->columns()
+                    ->collapsed(false),
+                Section::make('DE-канала')
+                    ->relationship('deChannel')
+                    ->columns()
+                    ->schema([
+                        TextInput::make('client_provider_name')
+                            ->maxLength(255),
+                        TextInput::make('start_connection_point')
+                            ->label('ТП №1')
+                            ->maxLength(255),
+                        TextInput::make('end_connection_point')
+                            ->label('ТП №2')
+                            ->maxLength(255),
+                        TextInput::make('intermediate_connection')
+                            ->label('Промежуточное подключение')
+                            ->maxLength(255),
+                        TextInput::make('using_device')
+                            ->label('Используемый вид оборудования')
+                            ->maxLength(255),
+                        DatePicker::make('connection_date')
+                            ->label('Дата подключения')
+                            ->native(false),
+                        TextInput::make('length')
+                            ->label('Протяженность')
+                            ->maxLength(255),
+                        TextInput::make('testing')
+                            ->label('Тестирование')
+                            ->maxLength(255),
+                        TextInput::make('connection_line')
+                            ->label('Соединительная линия')
+                            ->maxLength(255),
+                        Textarea::make('reason')
+                            ->autosize()
+                            ->label('Основание')
+                            ->maxLength(1024),
+                    ])
+                    ->collapsed(false),
+                Section::make('Дополнительная информация')
+                    ->relationship('information')
+                    ->schema([
+                        Repeater::make('repeater')
+                            ->schema([
+                                TextInput::make('key')
+                                    ->label('Ключ'),
+                                TextInput::make('value')
+                                    ->label('Значение')
+                            ])
+                            ->label('Пользовательские данные')
+                            ->columns()
+                            ->collapsed()
+                            ->cloneable()
+                            ->itemLabel(fn (array $state): ?string => $state['key'] ?? null),
+                        MarkdownEditor::make('markdown')
+                            ->fileAttachmentsDirectory('markdown-attachments'),
+                    ])
+                    ->columns()
+                    ->collapsed(false)
+
+            ])
+            ->modalWidth('7xl');
+    }
+
 }
-
-
 //                                ->createOptionUsing(function (array $data) {
 //                                    $channelType = ChannelType::create($data);
 //                                    return $channelType->getKey();
