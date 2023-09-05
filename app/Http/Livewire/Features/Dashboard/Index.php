@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Features\Dashboard;
 
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('Главная')]
 class Index extends Component
 {
     public function logout(): void

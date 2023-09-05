@@ -7,7 +7,8 @@
             </div>
             <div class="flex-grow mt-5 flex flex-col">
                 <nav class="flex-1 px-2 pb-4 space-y-1">
-                    <x-include.molecules.sidebar-button title="Dashboard" icon="home" href="#" active solid />
+                    <x-include.molecules.sidebar-button title="Главная" icon="home" href="{{ route('dashboard') }}" />
+                    <x-include.molecules.sidebar-button title="Данные" icon="circle-stack" href="{{ route('reference') }}" />
                 </nav>
             </div>
         </div>

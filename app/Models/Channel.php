@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Channel extends Model
@@ -16,6 +17,11 @@ class Channel extends Model
     public function deChannel(): HasOne
     {
         return $this->hasOne(DeChannel::class);
+    }
+
+    public function information(): HasOne
+    {
+        return $this->hasOne(ChannelInformation::class);
     }
 
     public function channelType(): BelongsTo

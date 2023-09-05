@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('de_channels', function (Blueprint $table) {
             $table->id();
             $table->foreignId('channel_id');
-            $table->string('client_provider_name');
-            $table->string('start_connection_point');
-            $table->string('end_connection_point');
-            $table->string('intermediate_connection');
-            $table->string('using_device');
-            $table->date('connection_date');
-            $table->string('length');
-            $table->string('testing');
-            $table->string('connection_line');
-            $table->string('reason');
+            $table->string('client_provider_name')->nullable();
+            $table->string('start_connection_point')->nullable();
+            $table->string('end_connection_point')->nullable();
+            $table->string('intermediate_connection')->nullable();
+            $table->string('using_device')->nullable();
+            $table->date('connection_date')->nullable();
+            $table->string('length')->nullable();
+            $table->string('testing')->nullable();
+            $table->string('connection_line')->nullable();
+            $table->text('reason')->nullable();
             $table->timestamps();
 
             $table->foreign('channel_id')->references('id')->on('channels');

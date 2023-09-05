@@ -21,13 +21,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create();
-        Type::factory(200)->create();
-        ChannelType::factory(200)->create();
-        TrafficType::factory(200)->create();
-        TransmissionType::factory(200)->create();
-        DirectionLevel::factory(200)->create();
-        Channel::factory(2000)->create();
-        DeChannel::factory(2000)->create();
+//        Type::factory(200)->create();
+//        ChannelType::factory(200)->create();
+//        TrafficType::factory(200)->create();
+//        TransmissionType::factory(200)->create();
+//        DirectionLevel::factory(200)->create();
+//        Channel::factory(2000)->create();
+//        DeChannel::factory(2000)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

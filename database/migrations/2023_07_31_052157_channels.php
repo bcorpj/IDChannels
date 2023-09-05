@@ -12,19 +12,20 @@ return new class extends Migration
             $table->id();
             $table->string('channel_number')->nullable();
             $table->string('klm')->nullable();
-            $table->foreignId('channel_type_id');
-            $table->foreignId('traffic_type_id');
-            $table->foreignId('transmission_type_id');
-            $table->foreignId('direction_level_id');
-            $table->foreignId('type_id');
+            $table->foreignId('channel_type_id')->nullable();
+            $table->foreignId('traffic_type_id')->nullable();
+            $table->foreignId('transmission_type_id')->nullable();
+            $table->foreignId('direction_level_id')->nullable();
+            $table->foreignId('type_id')->nullable();
             $table->string('bandwidth')->nullable();
             $table->timestamps();
+//            $table->softDeletes();
 
-            $table->foreign('channel_type_id')->references('id')->on('channel_types');
-            $table->foreign('traffic_type_id')->references('id')->on('traffic_types');
-            $table->foreign('transmission_type_id')->references('id')->on('transmission_types');
-            $table->foreign('direction_level_id')->references('id')->on('direction_levels');
-            $table->foreign('type_id')->references('id')->on('types');
+            $table->foreign('channel_type_id')->references('id')->on('channel_types')->nullOnDelete();
+            $table->foreign('traffic_type_id')->references('id')->on('traffic_types')->nullOnDelete();
+            $table->foreign('transmission_type_id')->references('id')->on('transmission_types')->nullOnDelete();
+            $table->foreign('direction_level_id')->references('id')->on('direction_levels')->nullOnDelete();
+            $table->foreign('type_id')->references('id')->on('types')->nullOnDelete();
         });
     }
 

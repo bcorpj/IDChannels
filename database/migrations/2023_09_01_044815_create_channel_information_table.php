@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('channel_informations', function (Blueprint $table) {
+        Schema::create('channel_information', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('channel_id');
+            $table->json('repeater')->nullable();
+            $table->text('markdown')->nullable();
+
             $table->timestamps();
+            $table->foreign('channel_id')->references('id')->on('channels');
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('channel_informations');
+        Schema::dropIfExists('channel_information');
     }
 };
