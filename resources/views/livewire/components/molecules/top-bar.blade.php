@@ -1,4 +1,4 @@
-<div class="sticky top-0 z-10 flex-shrink-0 h-16 bg-white border-b border-gray-200 flex">
+<div class="sticky top-0 z-10 flex-shrink-0 h-16 mt-2 bg-white border-gray-200 flex">
     <button type="button" class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
         <span class="sr-only">Open sidebar</span>
         <!-- Heroicon name: outline/menu-alt-2 -->
