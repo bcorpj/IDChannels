@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('fullname');
             $table->string('login')->unique();
             $table->string('password');
+            $table->json('settings')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -14,10 +14,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('Пользователи')]
 class Users extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
@@ -80,6 +78,7 @@ class Users extends Component implements HasForms, HasTable
 
     public function render()
     {
-        return view('livewire.features.users.users');
+        return view('livewire.features.users.users')
+            ->title(__('ui.users'));
     }
 }

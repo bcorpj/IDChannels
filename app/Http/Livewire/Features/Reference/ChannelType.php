@@ -3,17 +3,10 @@
 namespace App\Http\Livewire\Features\Reference;
 
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\TextInputColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Table;
-use Livewire\Attributes\Title;
-use Livewire\Component;
 
-#[Title('Тип канала')]
+
 class ChannelType extends Reference
 {
     public function boot (): void
@@ -33,5 +26,11 @@ class ChannelType extends Reference
                 ->required()
                 ->maxLength(255),
         ];
+    }
+
+    public function render()
+    {
+        return view('livewire.features.reference.channel-type')
+            ->title(__('Channel type'));
     }
 }

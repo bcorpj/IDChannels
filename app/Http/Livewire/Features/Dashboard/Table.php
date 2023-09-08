@@ -48,7 +48,8 @@ class Table extends Component implements HasTable, HasForms
             ->query(Channel::with(['deChannel', 'information', 'channelType', 'trafficType', 'transmissionType', 'directionLevel', 'type']))
             ->columns([
                 TextColumn::make('channel_number')
-                    ->label('ID канала')
+                    ->label(__('ChannelID'))
+                    ->translateLabel()
                     ->searchable(),
                 TextColumn::make('klm')
                     ->label('KLM')
@@ -58,86 +59,86 @@ class Table extends Component implements HasTable, HasForms
                     ->tooltip(columnTooltip())
                     ->toggleable(),
                 TextColumn::make('channelType.id')
-                    ->label('Тип канала')
+                    ->label(__('Channel type'))
                     ->searchable()
                     ->sortable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(),
                 TextColumn::make('trafficType.name')
-                    ->label('Тип трафика')
+                    ->label(__('Traffic type'))
                     ->searchable()
                     ->sortable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(),
                 TextColumn::make('transmissionType.name')
-                    ->label('Тип среды передач')
+                    ->label(__('Transmission type'))
                     ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('directionLevel.name')
-                    ->label('Уровень/направление')
+                    ->label(__('Direction level'))
                     ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('bandwidth')
-                    ->label('Пропускная способность')
+                    ->label(__('Bandwidth'))
                     ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('type.alias')
-                    ->label('Вид')
+                    ->label(__('Type'))
                     ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.client_provider_name')
-                    ->label('Принадлженость')
+                    ->label(__('Сlient provider'))
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.start_connection_point')
-                    ->label('ТП №1')
+                    ->label(__('CP №1'))
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.end_connection_point')
-                    ->label('ТП №2')
+                    ->label(__('CP №2'))
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.intermediate_connection')
-                    ->label('Промежуточное подключение')
+                    ->label(__('Intermediate connection'))
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.using_device')
-                    ->label('Используемый вид оборудования')
+                    ->label(__('Using device'))
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.connection_date')
-                    ->label('Дата подключения')
+                    ->label(__('Connection date'))
                     ->badge()
                     ->color('info')
                     ->date('d-m-Y')
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.length')
-                    ->label('Протяженность')
+                    ->label(__('Length'))
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.testing')
-                    ->label('Тестирование')
+                    ->label(__('Testing'))
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.connection_line')
-                    ->label('Соединительная линия')
+                    ->label(__('Connection line'))
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -146,7 +147,7 @@ class Table extends Component implements HasTable, HasForms
                 Group::make('klm')
                     ->label('KLM'),
                 Group::make('channelType.name')
-                    ->label('Тип канала'),
+                    ->label(__('Channel type')),
             ])
             ->actions([
                 $this->openIdChannel(),
@@ -171,73 +172,77 @@ class Table extends Component implements HasTable, HasForms
     {
         return ViewAction::make()
             ->form([
-                Section::make('ID-канала')
+                Section::make(__('ChannelID'))
                     ->schema([
                         TextInput::make('channel_number')
+                            ->label(__('ChannelID'))
                             ->required()
                             ->maxLength(255),
                         TextInput::make('klm')
+                            ->label('KLM')
                             ->maxLength(255),
                         Select::make('channel_type_id')
-                            ->label('Тип канала')
+                            ->label(__('Channel type'))
                             ->relationship(name: 'channelType', titleAttribute: 'name')
                             ->options(ChannelType::query()->pluck('name', 'id')),
                         Select::make('traffic_type_id')
-                            ->label('Тип трафика')
+                            ->label(__('Traffic type'))
                             ->relationship(name: 'trafficType', titleAttribute: 'name')
                             ->options(TrafficType::query()->pluck('name', 'id')),
                         Select::make('transmission_type_id')
-                            ->label('Тип среды передач')
+                            ->label(__('Transmission type'))
                             ->relationship(name: 'transmissionType', titleAttribute: 'name')
                             ->options(TransmissionType::query()->pluck('name', 'id')),
                         Select::make('direction_level_id')
-                            ->label('Уровень/направление')
+                            ->label(__('Direction level'))
                             ->relationship(name: 'directionLevel', titleAttribute: 'name')
                             ->options(DirectionLevel::query()->pluck('name', 'id')),
                         TextInput::make('bandwidth')
+                            ->label(__('Bandwidth'))
                             ->maxLength(255),
                         Select::make('type_id')
-                            ->label('Вид')
+                            ->label(__('Type'))
                             ->relationship(name: 'type', titleAttribute: 'name')
                             ->options(Type::query()->pluck('name', 'id')),
                     ])
                     ->columns(),
-                Section::make('DE-канала')
+                Section::make(__('ChannelDE'))
                     ->relationship('deChannel')
                     ->columns()
                     ->schema([
                         TextInput::make('client_provider_name')
+                            ->label(__('Сlient provider'))
                             ->maxLength(255),
                         TextInput::make('start_connection_point')
-                            ->label('ТП №1')
+                            ->label(__('CP №1'))
                             ->maxLength(255),
                         TextInput::make('end_connection_point')
-                            ->label('ТП №2')
+                            ->label(__('CP №2'))
                             ->maxLength(255),
                         TextInput::make('intermediate_connection')
-                            ->label('Промежуточное подключение')
+                            ->label(__('Intermediate connection'))
                             ->maxLength(255),
                         TextInput::make('using_device')
-                            ->label('Используемый вид оборудования')
+                            ->label(__('Using device'))
                             ->maxLength(255),
                         DatePicker::make('connection_date')
-                            ->label('Дата подключения')
+                            ->label(__('Connection date'))
                             ->native(false),
                         TextInput::make('length')
-                            ->label('Протяженность')
+                            ->label(__('Length'))
                             ->maxLength(255),
                         TextInput::make('testing')
-                            ->label('Тестирование')
+                            ->label(__('Testing'))
                             ->maxLength(255),
                         TextInput::make('connection_line')
-                            ->label('Соединительная линия')
+                            ->label(__('Connection line'))
                             ->maxLength(255),
                         Textarea::make('reason')
                             ->autosize()
-                            ->label('Основание')
+                            ->label(__('Reason'))
                             ->maxLength(1024),
                     ]),
-                Section::make('Дополнительная информация')
+                Section::make(__("Additional information"))
                     ->relationship('information')
                     ->schema([
                         Repeater::make('repeater')
@@ -267,15 +272,16 @@ class Table extends Component implements HasTable, HasForms
         return EditAction::make()
             ->visible($this->user->hasAnyRole('admin|manager'))
             ->form([
-                Section::make('ID-канала')
+                Section::make(__('ChannelID'))
                     ->schema([
                         TextInput::make('channel_number')
                             ->required()
+                            ->label(__('ChannelID'))
                             ->maxLength(255),
                         TextInput::make('klm')
                             ->maxLength(255),
                         Select::make('channel_type_id')
-                            ->label('Тип канала')
+                            ->label(__('Channel type'))
                             ->relationship(name: 'channelType', titleAttribute: 'name')
                             ->options(ChannelType::query()->pluck('name', 'id'))
                             ->searchable()
@@ -289,7 +295,7 @@ class Table extends Component implements HasTable, HasForms
                                     ->required()
                             ]),
                         Select::make('traffic_type_id')
-                            ->label('Тип трафика')
+                            ->label(__('Traffic type'))
                             ->relationship(name: 'trafficType', titleAttribute: 'name')
                             ->options(TrafficType::query()->pluck('name', 'id'))
                             ->searchable()
@@ -303,7 +309,7 @@ class Table extends Component implements HasTable, HasForms
                                     ->required()
                             ]),
                         Select::make('transmission_type_id')
-                            ->label('Тип среды передач')
+                            ->label(__('Transmission type'))
                             ->relationship(name: 'transmissionType', titleAttribute: 'name')
                             ->options(TransmissionType::query()->pluck('name', 'id'))
                             ->searchable()
@@ -317,7 +323,7 @@ class Table extends Component implements HasTable, HasForms
                                     ->required()
                             ]),
                         Select::make('direction_level_id')
-                            ->label('Уровень/направление')
+                            ->label(__('Direction level'))
                             ->relationship(name: 'directionLevel', titleAttribute: 'name')
                             ->options(DirectionLevel::query()->pluck('name', 'id'))
                             ->searchable()
@@ -331,9 +337,10 @@ class Table extends Component implements HasTable, HasForms
                                     ->required()
                             ]),
                         TextInput::make('bandwidth')
+                            ->label(__('Bandwidth'))
                             ->maxLength(255),
                         Select::make('type_id')
-                            ->label('Вид')
+                            ->label(__('Type'))
                             ->relationship(name: 'type', titleAttribute: 'name')
                             ->options(Type::query()->pluck('name', 'id'))
                             ->searchable()
@@ -354,43 +361,44 @@ class Table extends Component implements HasTable, HasForms
                     ])
                     ->columns()
                     ->collapsed(false),
-                Section::make('DE-канала')
+                Section::make(__('ChannelDE'))
                     ->relationship('deChannel')
                     ->columns()
                     ->schema([
                         TextInput::make('client_provider_name')
+                            ->label(__('Сlient provider'))
                             ->maxLength(255),
                         TextInput::make('start_connection_point')
-                            ->label('ТП №1')
+                            ->label(__('CP №1'))
                             ->maxLength(255),
                         TextInput::make('end_connection_point')
-                            ->label('ТП №2')
+                            ->label(__('CP №2'))
                             ->maxLength(255),
                         TextInput::make('intermediate_connection')
-                            ->label('Промежуточное подключение')
+                            ->label(__('Intermediate connection'))
                             ->maxLength(255),
                         TextInput::make('using_device')
-                            ->label('Используемый вид оборудования')
+                            ->label(__('Using device'))
                             ->maxLength(255),
                         DatePicker::make('connection_date')
-                            ->label('Дата подключения')
+                            ->label(__('Connection date'))
                             ->native(false),
                         TextInput::make('length')
-                            ->label('Протяженность')
+                            ->label(__('Length'))
                             ->maxLength(255),
                         TextInput::make('testing')
-                            ->label('Тестирование')
+                            ->label(__('Testing'))
                             ->maxLength(255),
                         TextInput::make('connection_line')
-                            ->label('Соединительная линия')
+                            ->label(__('Connection line'))
                             ->maxLength(255),
                         Textarea::make('reason')
                             ->autosize()
-                            ->label('Основание')
+                            ->label(__('Reason'))
                             ->maxLength(1024),
                     ])
                     ->collapsed(false),
-                Section::make('Дополнительная информация')
+                Section::make(__("Additional information"))
                     ->relationship('information')
                     ->schema([
                         Repeater::make('repeater')
@@ -421,15 +429,16 @@ class Table extends Component implements HasTable, HasForms
         return CreateAction::make()
             ->visible($this->user->hasAnyRole('admin|manager'))
             ->form([
-                Section::make('ID-канала')
+                Section::make(__('ChannelID'))
                     ->schema([
                         TextInput::make('channel_number')
+                            ->label(__('ID'))
                             ->required()
                             ->maxLength(255),
                         TextInput::make('klm')
                             ->maxLength(255),
                         Select::make('channel_type_id')
-                            ->label('Тип канала')
+                            ->label(__('Channel type'))
                             ->relationship(name: 'channelType', titleAttribute: 'name')
                             ->options(ChannelType::query()->pluck('name', 'id'))
                             ->searchable()
@@ -443,7 +452,7 @@ class Table extends Component implements HasTable, HasForms
                                     ->required()
                             ]),
                         Select::make('traffic_type_id')
-                            ->label('Тип трафика')
+                            ->label(__('Traffic type'))
                             ->relationship(name: 'trafficType', titleAttribute: 'name')
                             ->options(TrafficType::query()->pluck('name', 'id'))
                             ->searchable()
@@ -457,7 +466,7 @@ class Table extends Component implements HasTable, HasForms
                                     ->required()
                             ]),
                         Select::make('transmission_type_id')
-                            ->label('Тип среды передач')
+                            ->label(__('Transmission type'))
                             ->relationship(name: 'transmissionType', titleAttribute: 'name')
                             ->options(TransmissionType::query()->pluck('name', 'id'))
                             ->searchable()
@@ -471,7 +480,7 @@ class Table extends Component implements HasTable, HasForms
                                     ->required()
                             ]),
                         Select::make('direction_level_id')
-                            ->label('Уровень/направление')
+                            ->label(__('Direction level'))
                             ->relationship(name: 'directionLevel', titleAttribute: 'name')
                             ->options(DirectionLevel::query()->pluck('name', 'id'))
                             ->searchable()
@@ -485,9 +494,10 @@ class Table extends Component implements HasTable, HasForms
                                     ->required()
                             ]),
                         TextInput::make('bandwidth')
+                            ->label(__('Bandwidth'))
                             ->maxLength(255),
                         Select::make('type_id')
-                            ->label('Вид')
+                            ->label(__('Type'))
                             ->relationship(name: 'type', titleAttribute: 'name')
                             ->options(Type::query()->pluck('name', 'id'))
                             ->searchable()
@@ -508,43 +518,44 @@ class Table extends Component implements HasTable, HasForms
                     ])
                     ->columns()
                     ->collapsed(false),
-                Section::make('DE-канала')
+                Section::make(__('ChannelDE'))
                     ->relationship('deChannel')
                     ->columns()
                     ->schema([
                         TextInput::make('client_provider_name')
+                            ->label(__('Сlient provider'))
                             ->maxLength(255),
                         TextInput::make('start_connection_point')
-                            ->label('ТП №1')
+                            ->label(__('CP №1'))
                             ->maxLength(255),
                         TextInput::make('end_connection_point')
-                            ->label('ТП №2')
+                            ->label(__('CP №2'))
                             ->maxLength(255),
                         TextInput::make('intermediate_connection')
-                            ->label('Промежуточное подключение')
+                            ->label(__('Intermediate connection'))
                             ->maxLength(255),
                         TextInput::make('using_device')
-                            ->label('Используемый вид оборудования')
+                            ->label(__('Using device'))
                             ->maxLength(255),
                         DatePicker::make('connection_date')
-                            ->label('Дата подключения')
+                            ->label(__('Connection date'))
                             ->native(false),
                         TextInput::make('length')
-                            ->label('Протяженность')
+                            ->label(__('Length'))
                             ->maxLength(255),
                         TextInput::make('testing')
-                            ->label('Тестирование')
+                            ->label(__('Testing'))
                             ->maxLength(255),
                         TextInput::make('connection_line')
-                            ->label('Соединительная линия')
+                            ->label(__('Connection line'))
                             ->maxLength(255),
                         Textarea::make('reason')
                             ->autosize()
-                            ->label('Основание')
+                            ->label(__('Reason'))
                             ->maxLength(1024),
                     ])
                     ->collapsed(false),
-                Section::make('Дополнительная информация')
+                Section::make(__("Additional information"))
                     ->relationship('information')
                     ->schema([
                         Repeater::make('repeater')
@@ -564,7 +575,6 @@ class Table extends Component implements HasTable, HasForms
                     ])
                     ->columns()
                     ->collapsed(false)
-
             ])
             ->modalWidth('7xl');
     }

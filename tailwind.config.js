@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-/** @type {import('tailwindcss').Config} */
 import preset from './vendor/filament/support/tailwind.config.preset'
 
 module.exports = {

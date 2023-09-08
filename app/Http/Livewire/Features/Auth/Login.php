@@ -26,7 +26,7 @@ class Login extends Component
         if (Auth::attempt($credentials, $this->remember)) {
             $this->isSuccess = true;
             Notification::make()
-                    ->title('Успешный вход в учетную запись')
+                    ->title(__('notification.login'))
                     ->success()
                     ->send();
 
@@ -34,6 +34,17 @@ class Login extends Component
         }
 
         $this->addError('auth', 'Invalid login or password');
+    }
+
+    public function changeLocale(string $locale): void
+    {
+        changeLocale($locale);
+    }
+
+    public function render()
+    {
+        return view('livewire.features.auth.login')
+            ->title(__('ui.login_page'));
     }
 
 }

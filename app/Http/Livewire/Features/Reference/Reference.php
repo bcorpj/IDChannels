@@ -28,12 +28,6 @@ abstract class Reference extends Component implements HasTable, HasForms
     {
         return $table
             ->query($this->query)
-//            ->columns([
-//                Grid::make([
-//                    'lg' => 10,
-//                ])
-//                    ->schema($this->columns)
-//            ])
             ->columns($this->columns)
             ->headerActions(empty($this->createActions) ? $this->createActions : [
                 CreateAction::make()

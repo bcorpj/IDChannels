@@ -34,4 +34,10 @@ class Type extends Reference
                 ->maxLength(255),
         ];
     }
+
+    public function render()
+    {
+        return view('livewire.features.reference.type')
+            ->title(__('Type'));
+    }
 }

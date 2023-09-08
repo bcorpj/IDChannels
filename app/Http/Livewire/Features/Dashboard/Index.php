@@ -2,10 +2,8 @@
 
 namespace App\Http\Livewire\Features\Dashboard;
 
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('Главная')]
 class Index extends Component
 {
     public function logout(): void
@@ -16,6 +14,7 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.features.dashboard.index');
+        return view('livewire.features.dashboard.index')
+            ->title(__('ui.main_page'));
     }
 }

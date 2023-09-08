@@ -11,11 +11,11 @@ class TopBar extends Component
     {
         auth()->logout();
         Notification::make()
-            ->title('Вы вышли из учетной записи')
+            ->title(__('notification.logout'))
             ->icon('heroicon-o-information-circle')
             ->iconColor('info')
             ->send();
-        $this->redirect('login', true);
+        $this->redirect(route('login'), true);
     }
 
     public function boot()

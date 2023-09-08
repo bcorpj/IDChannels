@@ -30,7 +30,8 @@
     },
     "autoload": {
         "files": [
-            "app/Helpers/filament.php"
+            "app/Helpers/filament.php",
+            "app/Helpers/application.php"
         ],
         "psr-4": {
             "App\\": "app/",

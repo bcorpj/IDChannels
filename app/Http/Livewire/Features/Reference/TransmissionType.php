@@ -29,4 +29,10 @@ class TransmissionType extends Reference
                 ->maxLength(255),
         ];
     }
+
+    public function render()
+    {
+        return view('livewire.features.reference.transmission-type')
+            ->title(__('Transmission type'));
+    }
 }

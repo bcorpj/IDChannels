@@ -11,13 +11,13 @@
 
     <div class="flex flex-col justify-between flex-1 mt-6">
         <nav>
-            <x-include.molecules.sidebar-button-padded title="Главная" icon="home" href="{{ route('dashboard') }}" wire:navigate />
+            <x-include.molecules.sidebar-button-padded title="{{ __('ui.main_page') }}" icon="home" href="{{ route('dashboard') }}" wire:navigate />
             @hasanyrole('manager|admin')
-            <x-include.molecules.sidebar-button-padded title="Данные" icon="circle-stack" href="{{ route('reference') }}" wire:navigate />
+            <x-include.molecules.sidebar-button-padded title="{{ __('ui.prebuilt_data') }}" icon="circle-stack" href="{{ route('reference') }}" wire:navigate />
             @endhasanyrole
             @role('admin')
-            <x-include.molecules.sidebar-button-padded title="Пользователи" icon="users" href="{{ route('users') }}" wire:navigate />
-            <x-include.molecules.sidebar-button-padded title="Доступы" icon="eye" href="{{ route('access') }}" wire:navigate />
+            <x-include.molecules.sidebar-button-padded title="{{ __('ui.users') }}" icon="users" href="{{ route('users') }}" wire:navigate />
+            <x-include.molecules.sidebar-button-padded title="{{ __('ui.accesses') }}" icon="eye" href="{{ route('access') }}" wire:navigate />
             @endrole
         </nav>
     </div>
