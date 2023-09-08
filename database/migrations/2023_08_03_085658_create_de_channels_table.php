@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('de_channels', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('channel_id');
+            $table->foreignId('channel_id')->nullable();
             $table->string('client_provider_name')->nullable();
             $table->string('start_connection_point')->nullable();
             $table->string('end_connection_point')->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->text('reason')->nullable();
             $table->timestamps();
 
-            $table->foreign('channel_id')->references('id')->on('channels');
+            $table->foreign('channel_id')->references('id')->on('channels')->nullOnDelete();
         });
     }
 

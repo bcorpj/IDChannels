@@ -44,9 +44,30 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public static array $castRoles = [
+        'admin' => 'Администратор',
+        'manager' => 'Менеджер',
+        'user' => 'Пользователь'
+    ];
+
     public function role() : string
     {
-        return $this->getRoleNames()[0] ?? 'guest';
+        return @self::$castRoles[$this->roles()->first()->name] ?? 'Гость';
+    }
+
+    public function roleWithoutCast() : string
+    {
+        return $this->roles()->first()->name ?? 'none';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->roleWithoutCast() == 'admin';
+    }
+
+    public function alias(): string
+    {
+        return '#' . $this->id . '-' . $this->login . '@' . $this->role();
     }
 
 }

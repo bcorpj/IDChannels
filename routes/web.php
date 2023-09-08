@@ -19,7 +19,6 @@ Route::get('/login', Login::class)->middleware('guest')->name('login');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', \App\Http\Livewire\Features\Dashboard\Index::class)->name('dashboard');
-    Route::get('/reference', \App\Http\Livewire\Features\Reference\Index::class)->name('reference');
     Route::prefix('/reference')->group(function () {
         Route::get('/channel', \App\Http\Livewire\Features\Reference\ChannelType::class)->name('reference-channel');
         Route::get('/direction', \App\Http\Livewire\Features\Reference\DirectionLevel::class)->name('reference-direction');
@@ -27,4 +26,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/transmission', \App\Http\Livewire\Features\Reference\TransmissionType::class)->name('reference-transmission');
         Route::get('/type', \App\Http\Livewire\Features\Reference\Type::class)->name('reference-type');
     });
+
+    Route::middleware(['role:admin|manager'])->group(function () {
+        Route::get('/reference', \App\Http\Livewire\Features\Reference\Index::class)->name('reference');
+    });
+
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/users', \App\Http\Livewire\Features\Users\Users::class)->name('users');
+        Route::get('/access', \App\Http\Livewire\Features\Access\Access::class)->name('access');
+    });
+
+
 });

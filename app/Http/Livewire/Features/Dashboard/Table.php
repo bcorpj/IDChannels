@@ -9,6 +9,7 @@ use App\Models\DirectionLevel;
 use App\Models\TrafficType;
 use App\Models\TransmissionType;
 use App\Models\Type;
+use App\Models\User;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Repeater;
@@ -21,6 +22,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
@@ -32,6 +34,13 @@ use Livewire\Component;
 class Table extends Component implements HasTable, HasForms
 {
     use InteractsWithTable, InteractsWithForms;
+
+    private User $user;
+
+    public function boot()
+    {
+        $this->user = auth()->user();
+    }
 
     public function table(\Filament\Tables\Table $table): \Filament\Tables\Table
     {
@@ -140,14 +149,15 @@ class Table extends Component implements HasTable, HasForms
                     ->label('Тип канала'),
             ])
             ->actions([
+                $this->openIdChannel(),
                 ActionGroup::make([
-                    $this->openIdChannel(),
-                    $this->editMainTable(),
+                    $this->editChannel(),
+                    $this->deleteChannel()
                 ])
             ])
             ->deferLoading()
             ->headerActions([
-                $this->createNewChannel()
+                $this->createNewChannel(),
             ])
             ->striped()
             ->paginated([10, 20, 50]);
@@ -252,9 +262,10 @@ class Table extends Component implements HasTable, HasForms
      *
      * Open edit menu of ID channel
      */
-    public function editMainTable() : Action
+    public function editChannel() : Action
     {
         return EditAction::make()
+            ->visible($this->user->hasAnyRole('admin|manager'))
             ->form([
                 Section::make('ID-канала')
                     ->schema([
@@ -408,6 +419,7 @@ class Table extends Component implements HasTable, HasForms
     public function createNewChannel() : Action
     {
         return CreateAction::make()
+            ->visible($this->user->hasAnyRole('admin|manager'))
             ->form([
                 Section::make('ID-канала')
                     ->schema([
@@ -555,6 +567,14 @@ class Table extends Component implements HasTable, HasForms
 
             ])
             ->modalWidth('7xl');
+    }
+
+    public function deleteChannel()
+    {
+        return DeleteAction::make()
+            ->visible($this->user->hasAnyRole('admin'))
+            ->requiresConfirmation()
+            ->label('Delete');
     }
 
 }

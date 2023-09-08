@@ -1,5 +1,5 @@
 <div class="sticky top-0 z-10 flex-shrink-0 h-16 mt-2 bg-white border-gray-200 flex">
-    <button type="button" class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
+    <button type="button" class="border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
         <span class="sr-only">Open sidebar</span>
         <!-- Heroicon name: outline/menu-alt-2 -->
         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -49,13 +49,13 @@
                     From: "transform opacity-100 scale-100"
                     To: "transform opacity-0 scale-95"
                 -->
-                <div x-show="open" x-on:click.outside="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                <div x-show="open" x-on:click.outside="open = false" :class="open ? 'absolute' : 'hidden'" class="origin-top-right right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                     <!-- Active: "bg-gray-100", Not Active: "" -->
                     <a href="#" class="block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
 
                     <a href="#" class="block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
 
-                    <a wire:click="logout" class="cursor-pointer block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                    <a wire:click="logout" wire:loading.attr="disabled" class="cursor-pointer block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
                 </div>
             </div>
         </div>

@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('channel_information', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('channel_id');
+            $table->foreignId('channel_id')->nullable();
             $table->json('repeater')->nullable();
             $table->text('markdown')->nullable();
 
             $table->timestamps();
-            $table->foreign('channel_id')->references('id')->on('channels');
+            $table->foreign('channel_id')->references('id')->on('channels')->nullOnDelete();
         });
     }
 

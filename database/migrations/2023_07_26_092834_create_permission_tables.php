@@ -119,9 +119,9 @@ class CreatePermissionTables extends Migration
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
             ->forget(config('permission.cache.key'));
 
-        Role::create(['name' => 'User']);
-        Role::create(['name' => 'Manager']);
-        Role::create(['name' => 'Administrator']);
+        Role::create(['name' => 'user']);
+        Role::create(['name' => 'manager']);
+        Role::create(['name' => 'admin']);
     }
 
     /**

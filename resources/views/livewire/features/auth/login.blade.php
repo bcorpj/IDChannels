@@ -18,7 +18,8 @@
                     <x-include.atoms.link title="Forgot your password?"  />
                 </div>
                 <div>
-                    <button wire:loading.class="bg-gray-200" type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sign in</button>
+
+                    <button @disabled($isSuccess) wire:loading.class="bg-gray-200" wire:loading.attr="disabled" type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sign in</button>
                 </div>
             </form>
         </div>
