@@ -24,6 +24,10 @@
     "Reason": "Основание",
     "ChannelDE": "DE-канала",
     "Additional information": "Дополнительная информация",
-    "Custom data's": "Пользовательские данные"
+    "Custom data's": "Пользовательские данные",
+    "User does not have the right roles.": "У пользователя нет cоответствующих ролей.",
+    "User does not have the right permissions.": "У пользователя нет необходимых разрешений.",
+    "User does not have any of the necessary access rights.": "У пользователя нет необходимых прав доступа.",
+    "User is not logged in.": "Пользователь не авторизован."
 
 }

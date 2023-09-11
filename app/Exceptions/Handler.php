@@ -33,7 +33,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if ($e instanceof UnauthorizedException) {
-            session()->flash('access', $e->getMessage());
+            session()->flash('access', __($e->getMessage()));
             return redirect()->to(route('dashboard'));
         }
 
