@@ -20,7 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'fullname',
-        'email',
+        'login',
         'password',
         'settings'
     ];
@@ -70,6 +70,19 @@ class User extends Authenticatable
     public function alias(): string
     {
         return '#' . $this->id . '-' . $this->login . '@' . $this->role();
+    }
+
+    public function setLocale(string $locale)
+    {
+        $settings = $this->settings;
+        $settings['locale'] = $locale;
+        $this->settings = $settings;
+        $this->save();
+    }
+
+    public function getLocale()
+    {
+        return $this->settings['locale'] ?? null;
     }
 
 }

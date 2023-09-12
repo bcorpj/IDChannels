@@ -51,9 +51,7 @@
                 -->
                 <div x-show="open" x-on:click.outside="open = false" :class="open ? 'absolute' : 'hidden'" class="origin-top-right right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                     <!-- Active: "bg-gray-100", Not Active: "" -->
-                    <a href="#" class="block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">{{ __('ui.profile') }}</a>
-
-                    <a href="#" class="block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">{{ __('ui.settings') }}</a>
+                    <a wire:navigate href="{{ route('settings') }}" class="block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">{{ __('ui.settings') }}</a>
 
                     <a wire:click="logout" wire:loading.attr="disabled" class="cursor-pointer block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">{{ __('ui.sign_out') }}</a>
                 </div>

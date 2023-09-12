@@ -19,12 +19,17 @@ class Login extends Component
     public bool $remember = false;
     public bool $isSuccess = false;
 
+    public string $locale = 'en';
+
     public function in(): void
     {
         $credentials = ['login' => $this->login, 'password' => $this->password];
 
         if (Auth::attempt($credentials, $this->remember)) {
             $this->isSuccess = true;
+
+            Auth::user()->setLocale($this->locale);
+
             Notification::make()
                     ->title(__('notification.login'))
                     ->success()
@@ -38,6 +43,7 @@ class Login extends Component
 
     public function changeLocale(string $locale): void
     {
+        $this->locale = $locale;
         changeLocale($locale);
     }
 

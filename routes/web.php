@@ -19,6 +19,7 @@ Route::get('/login', Login::class)->middleware('guest')->name('login');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', \App\Http\Livewire\Features\Dashboard\Index::class)->name('dashboard');
+    Route::get('/settings', \App\Http\Livewire\Features\Profile\Settings::class)->name('settings');
     Route::prefix('/reference')->group(function () {
         Route::get('/channel', \App\Http\Livewire\Features\Reference\ChannelType::class)->name('reference-channel');
         Route::get('/direction', \App\Http\Livewire\Features\Reference\DirectionLevel::class)->name('reference-direction');

@@ -9,6 +9,11 @@ function changeLocale (string $locale): void
         abort(400);
     }
 
+    $user = Auth::user();
+
+    if ($user)
+        $user->setLocale($locale);
+
     if (Session::get('locale') != $locale)
         Session::put('locale', $locale);
 

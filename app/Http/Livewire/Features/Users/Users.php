@@ -3,12 +3,14 @@
 namespace App\Http\Livewire\Features\Users;
 
 use App\Models\User;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -40,6 +42,9 @@ class Users extends Component implements HasForms, HasTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+            ])
+            ->headerActions([
+                $this->newUser()
             ])
             ->actions([
                 $this->tableRowActions()
@@ -74,6 +79,28 @@ class Users extends Component implements HasForms, HasTable
                 ->modalDescription('Are you sure you\'d like to delete this post? This cannot be undone.')
                 ->modalSubmitActionLabel('Yes, delete it')
         ])->iconButton();
+    }
+
+    public function newUser()
+    {
+        return CreateAction::make()
+            ->form([
+                TextInput::make('fullname')
+                    ->label('ФИО')
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('login')
+                    ->required()
+                    ->label('Логин')
+                    ->maxLength(255),
+                TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->maxLength(112)
+            ])
+            ->mutateFormDataUsing(function ($data) {
+                return [ ...$data, 'settings' => ['locale' => config('app.locale')] ];
+            });
     }
 
     public function render()

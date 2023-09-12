@@ -89,6 +89,7 @@ class Access extends Component implements HasForms, HasTable
                     Select::make('role_id')
                         ->label('Role')
                         ->options($options)
+                        ->native(false)
                         ->required(),
                 ])
                 ->action(function (User $user, array $data): void {
@@ -136,6 +137,7 @@ class Access extends Component implements HasForms, HasTable
                     ->label('Доступ')
                     ->options($options)
                     ->required()
+                    ->native(false)
                     ->searchable()
             ])
             ->action(function (array $data): void {

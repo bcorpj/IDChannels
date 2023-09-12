@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('channels', function (Blueprint $table) {
             $table->id();
-            $table->string('channel_number')->nullable();
+            $table->string('channel_number')->nullable()->unique();
             $table->string('klm')->nullable();
             $table->foreignId('channel_type_id')->nullable();
             $table->foreignId('traffic_type_id')->nullable();
