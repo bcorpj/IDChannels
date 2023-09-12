@@ -20,5 +20,6 @@ return [
         'manage_account' => 'Manage how information is displayed on your account.'
     ],
     'photo' => 'Photo',
-    'fullname' => 'Fullname'
+    'fullname' => 'Fullname',
+    'current_language' => 'English',
 ];

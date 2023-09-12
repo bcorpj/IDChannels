@@ -65,7 +65,7 @@
                                     <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
                                         <dt class="text-sm font-medium text-gray-500">{{ __('ui.language') }}</dt>
                                         <dd class="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                            <span class="flex-grow">English</span>
+                                            <span class="flex-grow">{{ __('ui.current_language') }}</span>
                                             <span class="ml-4 flex-shrink-0">
                                                 @foreach(config('app.supported_locales') as $locale)
                                                     @if(App::getLocale() == $locale)
