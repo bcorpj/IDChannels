@@ -276,8 +276,7 @@ class Table extends Component implements HasTable, HasForms
                     ->schema([
                         TextInput::make('channel_number')
                             ->required()
-                            ->label(__('ChannelID'))
-                            ->unique()
+                            ->disabled()
                             ->maxLength(255),
                         TextInput::make('klm')
                             ->maxLength(255),
