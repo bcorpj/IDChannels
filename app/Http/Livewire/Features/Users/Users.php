@@ -26,7 +26,7 @@ class Users extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(User::doesntHave('roles'))
+            ->query(User::query())
             ->columns([
                 TextColumn::make('id')
                     ->label('id')
