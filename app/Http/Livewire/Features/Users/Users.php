@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Features\Users;
 
 use App\Models\User;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;

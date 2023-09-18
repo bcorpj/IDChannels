@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Features\Dashboard;
 
 use App\Models\Channel;
 use App\Models\ChannelType;
-use App\Models\DeChannel;
 use App\Models\DirectionLevel;
 use App\Models\TrafficType;
 use App\Models\TransmissionType;
@@ -142,7 +141,6 @@ class Table extends Component implements HasTable, HasForms
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
-
             ])->groups([
                 Group::make('klm')
                     ->label('KLM'),

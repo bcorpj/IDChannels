@@ -49,4 +49,9 @@ class Channel extends Model
         return $this->belongsTo(Type::class, 'type_id');
     }
 
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
 }

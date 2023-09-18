@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('transmission_type_id')->nullable();
             $table->foreignId('direction_level_id')->nullable();
             $table->foreignId('type_id')->nullable();
+            $table->foreignId('branch_id')->nullable();
             $table->string('bandwidth')->nullable();
             $table->timestamps();
 //            $table->softDeletes();
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->foreign('transmission_type_id')->references('id')->on('transmission_types')->nullOnDelete();
             $table->foreign('direction_level_id')->references('id')->on('direction_levels')->nullOnDelete();
             $table->foreign('type_id')->references('id')->on('types')->nullOnDelete();
+            $table->foreign('branch_id')->references('id')->on('branches')->nullOnDelete();
         });
     }
 

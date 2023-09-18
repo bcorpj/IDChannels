@@ -2,13 +2,11 @@
 
 namespace App\Http\Livewire\Features\Reference;
 
+use App\Models\User;
 use Closure;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\CreateAction;
-use Filament\Tables\Columns\Layout\Grid;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;

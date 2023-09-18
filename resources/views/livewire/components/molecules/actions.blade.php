@@ -10,6 +10,8 @@
             <x-include.atoms.sandbox-action to="{{ route('reference-transmission') }}" wire:navigate icon="bolt" name="{{ __('Transmission type') }}" description="Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendu" />
             <x-include.atoms.sandbox-action to="{{ route('reference-direction') }}" wire:navigate icon="arrows-pointing-out" name="{{ __('Direction level') }}" description="Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendu" />
             <x-include.atoms.sandbox-action to="{{ route('reference-type') }}" wire:navigate icon="cube-transparent" name="{{ __('Type') }}" description="Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendu" />
+            <x-include.atoms.sandbox-action to="{{ route('branches') }}" wire:navigate icon="building-office-2" name="{{ __('Branches') }}" description="Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendu" />
+
 
         </div>
     </section>

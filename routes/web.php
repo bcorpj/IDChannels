@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/traffic', \App\Http\Livewire\Features\Reference\TrafficType::class)->name('reference-traffic');
         Route::get('/transmission', \App\Http\Livewire\Features\Reference\TransmissionType::class)->name('reference-transmission');
         Route::get('/type', \App\Http\Livewire\Features\Reference\Type::class)->name('reference-type');
+        Route::get('/branches', \App\Http\Livewire\Features\Reference\Branches::class)->name('branches');
     });
 
     Route::middleware(['role:admin|manager'])->group(function () {
