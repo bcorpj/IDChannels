@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Features\Dashboard;
 
+use App\Models\Branch;
 use App\Models\Channel;
 use App\Models\ChannelType;
 use App\Models\DirectionLevel;
@@ -18,6 +19,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Support\RawJs;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
@@ -28,10 +30,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\ActionsPosition;
-use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
-use Filament\Tables\Support\RelationshipJoiner;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
 class Table extends Component implements HasTable, HasForms
@@ -48,12 +48,19 @@ class Table extends Component implements HasTable, HasForms
     public function table(\Filament\Tables\Table $table): \Filament\Tables\Table
     {
         return $table
-            ->query(Channel::with(['deChannel', 'information', 'channelType', 'trafficType', 'transmissionType', 'directionLevel', 'type']))
+            ->query(Channel::with(['deChannel', 'information', 'channelType', 'trafficType', 'transmissionType', 'directionLevel', 'type', 'branch']))
             ->columns([
                 TextColumn::make('channel_number')
                     ->label(__('ChannelID'))
                     ->translateLabel()
                     ->searchable(),
+                TextColumn::make('branch.alias')
+                    ->label(__('Branch'))
+                    ->searchable()
+                    ->sortable()
+                    ->limit(50)
+                    ->tooltip(columnTooltip())
+                    ->toggleable(),
                 TextColumn::make('klm')
                     ->label('KLM')
                     ->searchable()
@@ -158,6 +165,15 @@ class Table extends Component implements HasTable, HasForms
                     ->label('KLM'),
                 Group::make('channelType.name')
                     ->label(__('Channel type')),
+                Group::make('branch.name')
+                    ->label(__('Branch')),
+            ])
+            ->filters([
+                SelectFilter::make('branch_id')
+                    ->label(__('Branch'))
+                    ->relationship(name: 'branch', titleAttribute: 'name')
+                    ->options(Branch::query()->pluck('name', 'id'))
+                    ->native(false)
             ])
             ->actions([
                 ActionGroup::make([
@@ -430,6 +446,10 @@ class Table extends Component implements HasTable, HasForms
                     ->collapsed(false)
 
             ])
+            ->mutateFormDataUsing(function (array $data) {
+                $data['branch_id'] = Channel::getBranch($data['channel_number']);
+                return $data;
+            })
             ->modalWidth('7xl');
     }
 
@@ -445,7 +465,11 @@ class Table extends Component implements HasTable, HasForms
                             ->label(__('ID'))
                             ->required()
                             ->unique()
-                            ->maxLength(255),
+                            ->minValue(1)
+                            ->maxValue(999999)
+                            ->mask(RawJs::make(<<<'JS'
+                                $input.replace(/(\d+)/, '0'.repeat(6) + '$1').slice(-6)
+                            JS)),
                         TextInput::make('klm')
                             ->maxLength(255),
                         Select::make('channel_type_id')
@@ -587,6 +611,11 @@ class Table extends Component implements HasTable, HasForms
                     ->columns()
                     ->collapsed(false)
             ])
+            ->mutateFormDataUsing(function (array $data) {
+                $data['branch_id'] = Channel::getBranch($data['channel_number']);
+                $data['channel_number'] = Channel::reformatToSixDigit($data['channel_number']);
+                return $data;
+            })
             ->modalWidth('7xl');
     }
 

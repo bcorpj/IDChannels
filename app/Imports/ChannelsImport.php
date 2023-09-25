@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Branch;
 use App\Models\Channel;
 use App\Models\ChannelType;
 use App\Models\DeChannel;
@@ -15,10 +16,11 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 
 class ChannelsImport implements ToCollection
 {
+    public array $branches;
 
     public function collection(Collection $collection): void
     {
-
+        $this->branches = Branch::all()->toArray();
         $endRow = 3830;
         for ($i = 10; $i <= $endRow; $i++) {
             try {
@@ -36,7 +38,7 @@ class ChannelsImport implements ToCollection
                     'direction_level_id' => $this->getDirectionLevel($row[22]),
                     'bandwidth' => $row[23],
                     'type_id' => $this->getTypeId($row[24]),
-                    'branch_id' => 1
+                    'branch_id' => Channel::getBranch($row[17]),
                 ]);
 
                 DeChannel::create([
@@ -137,5 +139,7 @@ class ChannelsImport implements ToCollection
             'alias' => $value
         ])->id;
     }
+
+
 
 }

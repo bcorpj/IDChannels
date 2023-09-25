@@ -54,4 +54,31 @@ class Channel extends Model
         return $this->belongsTo(Branch::class, 'branch_id');
     }
 
+
+    /*
+     * Channel methods
+     */
+
+    public static function getBranch(?string $value): int|null
+    {
+        $channelNumber = (int) $value;
+        $channelNumber = substr($channelNumber, -3);
+        $branches = Branch::all()->toArray();
+
+        // Iterate through the branches to find a match.
+        foreach ($branches as $index => $branch) {
+            if ($channelNumber >= $branch['channel_range_from'] && $channelNumber <= $branch['channel_range_to']) {
+                return $index + 1; // Add 1 to match your branch numbering.
+            }
+        }
+
+        return 10;
+    }
+
+    public static function reformatToSixDigit(string $value): string
+    {
+        $number = (int) $value;
+
+        return sprintf('%06d', $number);
+    }
 }
