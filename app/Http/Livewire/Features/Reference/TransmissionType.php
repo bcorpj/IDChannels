@@ -18,10 +18,14 @@ class TransmissionType extends Reference
             TextColumn::make('id')
                 ->label('ID')
                 ->searchable(),
+            TextInputColumn::make('alias')
+                ->label('Алиас')
+                ->searchable()
+                ->rules(['required', 'max:255']),
             TextInputColumn::make('name')
                 ->label('Название')
                 ->searchable()
-                ->rules(['required', 'max:255'])
+                ->rules(['required', 'max:255']),
         ];
         $this->createActions = [
             TextInput::make('name')

@@ -12,7 +12,7 @@
         }
     </style>
 </head>
-<body class="h-full subpixel-antialiased">
+<body class="max-w-screen h-full subpixel-antialiased">
     <livewire:components.molecules.sidebar-padded />
     <div class="md:pl-64">
         <div class="mx-2 flex flex-col xl:px-0 sm:mx-7">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="px-4 sm:px-6 md:px-0">
                         <!-- Replace with your content -->
-                        <div class="py-4">
+                        <div class="py-4 px-1">
                             {{ $slot }}
                         </div>
                         <!-- /End replace -->

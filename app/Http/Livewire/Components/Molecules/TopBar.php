@@ -27,4 +27,5 @@ class TopBar extends Component
                 ->send();
         }
     }
+
 }

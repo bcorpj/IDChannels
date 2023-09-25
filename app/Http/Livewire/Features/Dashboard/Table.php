@@ -27,7 +27,11 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Enums\ActionsPosition;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Grouping\Group;
+use Filament\Tables\Support\RelationshipJoiner;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
 class Table extends Component implements HasTable, HasForms
@@ -57,7 +61,7 @@ class Table extends Component implements HasTable, HasForms
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(),
-                TextColumn::make('channelType.id')
+                TextColumn::make('channelType.alias')
                     ->label(__('Channel type'))
                     ->searchable()
                     ->sortable()
@@ -97,26 +101,31 @@ class Table extends Component implements HasTable, HasForms
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.client_provider_name')
                     ->label(__('Сlient provider'))
+                    ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.start_connection_point')
                     ->label(__('CP №1'))
+                    ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.end_connection_point')
                     ->label(__('CP №2'))
+                    ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.intermediate_connection')
                     ->label(__('Intermediate connection'))
+                    ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.using_device')
                     ->label(__('Using device'))
+                    ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -128,16 +137,19 @@ class Table extends Component implements HasTable, HasForms
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.length')
                     ->label(__('Length'))
+                    ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.testing')
                     ->label(__('Testing'))
+                    ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deChannel.connection_line')
                     ->label(__('Connection line'))
+                    ->searchable()
                     ->limit(50)
                     ->tooltip(columnTooltip())
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -148,12 +160,12 @@ class Table extends Component implements HasTable, HasForms
                     ->label(__('Channel type')),
             ])
             ->actions([
-                $this->openIdChannel(),
                 ActionGroup::make([
                     $this->editChannel(),
                     $this->deleteChannel()
-                ])
-            ])
+                ]),
+                $this->openIdChannel(),
+            ], position: ActionsPosition::BeforeColumns)
             ->deferLoading()
             ->headerActions([
                 $this->createNewChannel(),
