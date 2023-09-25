@@ -24,29 +24,32 @@ class ChannelsImport implements ToCollection
             try {
                 $row = $collection[$i];
 
+                if (is_null($row[17]))
+                    continue;
+
                 $channel = Channel::create([
-                    'channel_number' => $row[17] ?? null,
-                    'klm' => $row[18] ?? null,
-                    'channel_type_id' => $this->getChannelType($row[19]) ?? null,
-                    'traffic_type_id' => $this->getTrafficType($row[20]) ?? null,
-                    'transmission_type_id' => $this->getTransmissionType($row[21]) ?? null,
-                    'direction_level_id' => $this->getDirectionLevel($row[22]) ?? null,
-                    'bandwidth' => $row[23] ?? null,
-                    'type_id' => $this->getTypeId($row[24]) ?? null,
+                    'channel_number' => $row[17],
+                    'klm' => $row[18],
+                    'channel_type_id' => $this->getChannelType($row[19]),
+                    'traffic_type_id' => $this->getTrafficType($row[20]),
+                    'transmission_type_id' => $this->getTransmissionType($row[21]),
+                    'direction_level_id' => $this->getDirectionLevel($row[22]),
+                    'bandwidth' => $row[23],
+                    'type_id' => $this->getTypeId($row[24]),
                     'branch_id' => 1
                 ]);
 
                 DeChannel::create([
-                    'channel_id' => $channel->id ?? null,
-                    'client_provider_name' => $row[25] ?? null,
-                    'start_connection_point' => $row[26] ?? null,
-                    'intermediate_connection' => $row[27] ?? null,
-                    'end_connection_point' => $row[28] ?? null,
-                    'using_device' => $row[29] ?? null,
-                    'length' => $row[31] ?? null,
-                    'testing' => $row[32] ?? null,
-                    'connection_line' => $row[33] ?? null,
-                    'reason' => $row[34] ?? null
+                    'channel_id' => $channel->id,
+                    'client_provider_name' => $row[25],
+                    'start_connection_point' => $row[26],
+                    'intermediate_connection' => $row[27],
+                    'end_connection_point' => $row[28],
+                    'using_device' => $row[29],
+                    'length' => $row[31],
+                    'testing' => $row[32],
+                    'connection_line' => $row[33],
+                    'reason' => $row[34]
                 ]);
 
             } catch (Exception $exception) {
