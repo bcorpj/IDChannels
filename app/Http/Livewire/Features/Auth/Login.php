@@ -15,7 +15,7 @@ class Login extends Component
     public string $login = '';
 
     #[Rule(['required', 'min:5'])]
-    public string $password = 'password';
+    public string $password = '';
     public bool $remember = false;
     public bool $isSuccess = false;
 
