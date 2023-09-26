@@ -38,7 +38,11 @@ class Login extends Component
             $this->redirect('/', true);
         }
 
-        $this->addError('auth', 'Invalid login or password');
+        Notification::make()
+            ->title(__('notification.incorrect_credentials'))
+            ->danger()
+            ->send();
+        $this->addError('auth', __('notification.incorrect_credentials'));
     }
 
     public function changeLocale(string $locale): void

@@ -2,7 +2,7 @@
     <div class="flex justify-between">
         <label for="{{ $name }}" class="block text-sm font-medium text-gray-700"> {{ $label }} </label>
         @if($showError and isset($errors))
-            <span class=" text-sm text-gray-900"> {{ $errors->first() }} </span>
+            <span class="text-sm text-rose-800"> {{ $errors->first() }} </span>
         @endif
     </div>
     <div class="mt-1">

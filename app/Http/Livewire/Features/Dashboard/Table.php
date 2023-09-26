@@ -446,10 +446,6 @@ class Table extends Component implements HasTable, HasForms
                     ->collapsed(false)
 
             ])
-            ->mutateFormDataUsing(function (array $data) {
-                $data['branch_id'] = Channel::getBranch($data['channel_number']);
-                return $data;
-            })
             ->modalWidth('7xl');
     }
 
