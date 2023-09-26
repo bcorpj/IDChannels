@@ -68,6 +68,10 @@ class Users extends Component implements HasForms, HasTable
                                 ->required()
                                 ->label('Логин')
                                 ->maxLength(255),
+                            TextInput::make('password')
+                                ->password()
+                                ->required()
+                                ->maxLength(112)
                         ])
                 ]),
             Action::make('delete')

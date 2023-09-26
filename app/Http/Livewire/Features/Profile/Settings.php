@@ -34,8 +34,22 @@ class Settings extends Component implements HasForms, HasActions
                     ->label(__(''))
                     ->required()
                     ->maxLength(255)
-            ]);
+            ])
+            ->modalHeading('Изменить полное имя');
+    }
 
+    public function updatePassword()
+    {
+        return EditAction::make('updatePassword')
+            ->link()
+            ->record($this->user)
+            ->form([
+                TextInput::make('password')
+                    ->label(__(''))
+                    ->required()
+                    ->maxLength(255)
+            ])
+            ->modalHeading('Сменить пароль');
     }
 
 

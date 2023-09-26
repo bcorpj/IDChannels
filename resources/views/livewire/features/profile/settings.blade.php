@@ -32,25 +32,24 @@
                                                         alt="">
                                             </span>
                                             <span class="ml-4 flex-shrink-0 flex items-start space-x-4">
-                                                <button type="button"
-                                                        class="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">Update</button>
-                                                <span class="text-gray-300" aria-hidden="true">|</span>
-                                                <button type="button"
-                                                        class="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">Remove</button>
+{{--                                                <button type="button"--}}
+{{--                                                        class="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">Update</button>--}}
+{{--                                                <span class="text-gray-300" aria-hidden="true">|</span>--}}
+{{--                                                <button type="button"--}}
+{{--                                                        class="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">Remove</button>--}}
                                             </span>
                                         </dd>
                                     </div>
-{{--                                    <div--}}
-{{--                                        class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200">--}}
-{{--                                        <dt class="text-sm font-medium text-gray-500">Job title</dt>--}}
-{{--                                        <dd class="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">--}}
-{{--                                            <span class="flex-grow">Human Resources Manager</span>--}}
-{{--                                            <span class="ml-4 flex-shrink-0">--}}
-{{--                                                <button type="button"--}}
-{{--                                                        class="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">Update</button>--}}
-{{--                                            </span>--}}
-{{--                                        </dd>--}}
-{{--                                    </div>--}}
+                                    <div
+                                        class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200">
+                                        <dt class="text-sm font-medium text-gray-500">{{ __('Password') }}</dt>
+                                        <dd class="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                            <span class="flex-grow">********</span>
+                                            <span class="ml-4 flex-shrink-0">
+                                                {{ $this->updatePassword() }}
+                                            </span>
+                                        </dd>
+                                    </div>
                                 </dl>
                             </div>
                         </div>
