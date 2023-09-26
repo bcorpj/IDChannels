@@ -35,7 +35,8 @@
                 <div>
                     <button type="button" x-on:click="open = !open" class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                         <span class="sr-only">Open user menu</span>
-                        <img class="h-8 w-8 rounded-full" src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-users-icon-png-image_856952.jpg" alt="">
+{{--                        <img class="h-8 w-8 rounded-full" src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-users-icon-png-image_856952.jpg" alt="">--}}
+                        <img class="h-8 w-8 rounded-full" src="{{ asset('icon.png') }}" alt="">
                     </button>
                 </div>
 
