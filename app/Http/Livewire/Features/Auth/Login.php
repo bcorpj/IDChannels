@@ -36,13 +36,13 @@ class Login extends Component
                     ->send();
 
             $this->redirect('/', true);
+        } else {
+            Notification::make()
+                ->title(__('notification.incorrect_credentials'))
+                ->danger()
+                ->send();
+            $this->addError('auth', __('notification.incorrect_credentials'));
         }
-
-        Notification::make()
-            ->title(__('notification.incorrect_credentials'))
-            ->danger()
-            ->send();
-        $this->addError('auth', __('notification.incorrect_credentials'));
     }
 
     public function changeLocale(string $locale): void
