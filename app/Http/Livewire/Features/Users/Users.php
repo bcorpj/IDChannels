@@ -70,7 +70,6 @@ class Users extends Component implements HasForms, HasTable
                                 ->maxLength(255),
                             TextInput::make('password')
                                 ->password()
-                                ->required()
                                 ->maxLength(112)
                         ])
                 ]),
