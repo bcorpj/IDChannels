@@ -20,7 +20,7 @@
             </div>
             <form class="space-y-6" wire:submit="in">
 
-                <x-include.atoms.input required name="login" label="{{ __('Login') }}" wire:model="login" show-error />
+                <x-include.atoms.input autocomplete="off" required name="login" label="{{ __('Login') }}" wire:model="login" show-error />
 
                 <x-include.atoms.input required name="password" label="{{ __('Password') }}" type="password" wire:model="password" />
 
