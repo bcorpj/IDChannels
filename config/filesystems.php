@@ -35,6 +35,11 @@ return [
             'root' => env('BACKUP_SAVE_DIR'),
         ],
 
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'authorization_token' => env('DROPBOX_ACCESS_TOKEN'),
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

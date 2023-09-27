@@ -163,6 +163,7 @@ return [
          */
         Spatie\Permission\PermissionServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        App\Providers\DropboxServiceProvider::class,
 
         /*
          * Application Service Providers...
