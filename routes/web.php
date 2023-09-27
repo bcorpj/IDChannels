@@ -38,5 +38,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/access', \App\Http\Livewire\Features\Access\Access::class)->name('access');
     });
 
-
+    Route::get('/test', function () {
+        return storage_path(Storage::disk('os_root'));
+    });
 });
