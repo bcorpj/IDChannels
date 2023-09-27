@@ -116,7 +116,7 @@ return [
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-                'backups',
+                env('APP_ENV') == 'production' ? 'backups' : 'local',
                 'dropbox'
             ],
         ],
@@ -223,7 +223,10 @@ return [
     'monitor_backups' => [
         [
             'name' => env('APP_NAME', 'laravel-backup'),
-            'disks' => ['backups', 'dropbox'],
+            'disks' => [
+                env('APP_ENV') == 'production' ? 'backups' : 'local',
+                'dropbox'
+            ],
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
