@@ -37,8 +37,4 @@ Route::middleware('auth')->group(function () {
         Route::get('/users', \App\Http\Livewire\Features\Users\Users::class)->name('users');
         Route::get('/access', \App\Http\Livewire\Features\Access\Access::class)->name('access');
     });
-
-    Route::get('/test', function () {
-        return storage_path(Storage::disk('os_root'));
-    });
 });
